@@ -2,32 +2,55 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
 
-def int_to_string(x):
-    res, num2, l = "", num, 0
-    while num2 != 0:
-        num2 /= 10
-        l += 1
+def int_to_string(num):
+    if num == 0:
+        return "0"
 
-    for i in range(l - 1, -1, -1):
-        part_res = num / (10 ** i)
-        res += "{}".format(part_res)
-        part_num = num % (10 ** i)
-        num = part_num
-        if part_res < 0:
-            num = -1 * part_num
+    ans, sign = [], '+'
 
-    return res
+    if num < 0:
+        sign = '-'
+        num = -1 * num
+
+    while num > 0:
+        ans.append("{}".format(num % 10))
+        num //= 10
+
+    if sign == '-':
+        ans.append('-')
+
+    ans.reverse()
+    return "".join(ans)
 
 
 def string_to_int(s):
-    # TODO - you fill in here.
-    return 0
+    if len(s) == 0:
+        return
 
+    sign = "+"
+    if s[0] == "-":
+        sign = "-"
+
+    res = 0
+    for c in s:
+        if c != "-":
+            res = res * 10 + (ord(c) - ord('0'))
+
+    if sign == "-":
+        res = 0 - res
+
+    return res
 
 def wrapper(x, s):
-    if int_to_string(x) != s:
+    res_x = int_to_string(x)
+    if res_x != s:
+        print("reached here")
+        print(res_x)
         raise TestFailure("Int to string conversion failed")
-    if string_to_int(s) != x:
+
+    res_s = string_to_int(s)
+    if res_s != x:
+        print(res_s)
         raise TestFailure("String to int conversion failed")
 
 
