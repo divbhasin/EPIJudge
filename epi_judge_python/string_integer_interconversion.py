@@ -3,8 +3,20 @@ from test_framework.test_failure import TestFailure
 
 
 def int_to_string(x):
-    # TODO - you fill in here.
-    return ''
+    res, num2, l = "", num, 0
+    while num2 != 0:
+        num2 /= 10
+        l += 1
+
+    for i in range(l - 1, -1, -1):
+        part_res = num / (10 ** i)
+        res += "{}".format(part_res)
+        part_num = num % (10 ** i)
+        num = part_num
+        if part_res < 0:
+            num = -1 * part_num
+
+    return res
 
 
 def string_to_int(s):
