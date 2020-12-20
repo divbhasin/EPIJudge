@@ -3,29 +3,19 @@ from list_node import ListNode
 
 
 def reverse_sublist(L, start, finish):
-    dummy = ListNode()
-    dummy.next = L
+    dummy = ListNode(0, L)
+    sb_head = dummy
 
-    pos, prev, curr = 0, None, dummy 
-    while pos < start:
-        prev = curr
-        curr = curr.next
-        pos += 1
+    for _ in range(1, start):
+        sb_head = sb_head.next
 
-    prevStart, startN = prev, curr
+    sub_curr = sb_head.next
+    for _ in range(finish - start):
+        t = sub_curr.next
 
-    while pos < finish + 1:
-        n = curr.next
-        curr.next = prev
-        prev = curr
-        curr = n
-        pos += 1
-
-    if prevStart and prevStart != prev:
-        prevStart.next = prev
-
-    if startN and startN != curr:
-        startN.next = curr
+        sub_curr.next = t.next
+        t.next = sb_head.next
+        sb_head.next = t
 
     return dummy.next 
 
