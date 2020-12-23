@@ -16,15 +16,12 @@ def is_linked_list_a_palindrome(L):
 
         return h.next
 
-    dummy = ListNode(0, L)
-    slow, fast = dummy, dummy 
-    while fast and fast.next and fast.next.next:
+    slow, fast = L, L 
+    while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-    rev = reverse(slow.next)
-    slow.next = None
-
+    rev = reverse(slow)
     curr = L
 
     while rev and curr:
