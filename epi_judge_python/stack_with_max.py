@@ -1,23 +1,47 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
+class ListNode:
+    def __init__(self, val=0, next=None, maxv=float('-inf'), prev=None):
+        self.val = val
+        self.next = next
+        self.maxv = maxv
+        self.prev = prev
 
 class Stack:
+    def __init__(self):
+        self.curr = ListNode()
+        self.cap = 0
+
     def empty(self):
-        # TODO - you fill in here.
-        return True
+        return self.cap == 0
 
     def max(self):
-        # TODO - you fill in here.
-        return 0
+        if self.cap == 0:
+            print("stack is empty!")
+            return
+
+        return self.curr.maxv
 
     def pop(self):
-        # TODO - you fill in here.
-        return 0
+        if self.cap == 0:
+            print("stack is empty!")
+            return
+
+        self.cap -= 1
+        val = self.curr.val
+        self.curr = self.curr.prev
+        self.curr.next = None
+        return val
 
     def push(self, x):
-        # TODO - you fill in here.
-        return
+        self.cap += 1
+        new_curr = ListNode()
+        new_curr.val = x
+        new_curr.prev = self.curr
+        new_curr.maxv = max(self.curr.maxv, new_curr.val)
+        self.curr.next = new_curr
+        self.curr = new_curr
 
 
 def stack_tester(ops):
