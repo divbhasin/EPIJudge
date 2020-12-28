@@ -1,9 +1,19 @@
 from test_framework import generic_test
 
 
+def height(root):
+    if root is None:
+        return 0
+
+    return 1 + max(height(root.left), height(root.right))
+
 def is_balanced_binary_tree(tree):
-    # TODO - you fill in here.
-    return True
+    if not tree:
+        return True
+
+    return abs(height(tree.left) - height(tree.right)) <= 1 and \
+            is_balanced_binary_tree(tree.left) and \
+            is_balanced_binary_tree(tree.right)
 
 
 if __name__ == '__main__':
