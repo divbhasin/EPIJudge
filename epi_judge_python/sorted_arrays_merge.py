@@ -5,16 +5,19 @@ import heapq
 def merge_sorted_arrays(sorted_arrays):
     heap = []
 
-    for arr in sorted_arrays:
-        for elem in arr:
-            heapq.heappush(heap, elem)
+    for i in range(len(sorted_arrays)):
+        if sorted_arrays[i]:
+            heapq.heappush(heap, [sorted_arrays[i][0], 0, i])
 
-    final_arr = []
+    final = []
     while heap:
-        min_elem = heapq.heappop(heap)
-        final_arr.append(min_elem)
+        elem, idx, arr_num = heapq.heappop(heap)
+        if idx < len(sorted_arrays[arr_num]) - 1:
+            heapq.heappush(heap, [sorted_arrays[arr_num][idx + 1], idx + 1, arr_num])
 
-    return final_arr
+        final.append(elem)
+
+    return final
 
 if __name__ == '__main__':
     exit(
