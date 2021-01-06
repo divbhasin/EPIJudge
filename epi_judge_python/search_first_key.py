@@ -4,19 +4,19 @@ import bisect
 
 def search_first_of_k(A, k):
     lo, hi = 0, len(A) - 1
+    found = -1
 
     while lo <= hi:
         mid = lo + (hi - lo) // 2
-        if A[mid] > k:
-            hi = mid - 1
-        elif A[mid] < k:
-            lo = mid + 1
-        elif mid > 0 and A[mid] == k and A[mid - 1] == k:
-            lo, hi = mid - 1, mid - 1
-        else:
-            return mid
+        if A[mid] >= k:
+            if A[mid] == k:
+                found = mid
 
-    return -1
+            hi = mid - 1
+        else:
+            lo = mid + 1
+
+    return found 
 
 
 if __name__ == '__main__':
