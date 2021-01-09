@@ -1,8 +1,14 @@
 from test_framework import generic_test
+from collections import Counter
 
 
 def is_letter_constructible_from_magazine(letter_text, magazine_text):
-    # TODO - you fill in here.
+    msg_letters = Counter(magazine_text)
+    for c in letter_text:
+        if c not in msg_letters or msg_letters[c] == 0:
+            return False
+        msg_letters[c] -= 1
+
     return True
 
 
