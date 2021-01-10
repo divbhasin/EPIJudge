@@ -1,22 +1,34 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
+from collections import OrderedDict
 
 
 class LruCache:
     def __init__(self, capacity):
-        # TODO - you fill in here.
-        return
+        self.table = OrderedDict()
+        self.cap = capacity
 
     def lookup(self, isbn):
-        # TODO - you fill in here.
-        return 0
+        if isbn not in self.table:
+            return -1
+
+        self.table.move_to_end(isbn)
+        return self.table[isbn]
 
     def insert(self, isbn, price):
-        # TODO - you fill in here.
-        return
+        if isbn in self.table:
+            self.table.move_to_end(isbn)
+            return
+        elif self.cap == len(self.table):
+            self.table.popitem(last=False)
+
+        self.table[isbn] = price
 
     def erase(self, isbn):
-        # TODO - you fill in here.
+        if isbn not in self.table:
+            return False
+
+        del self.table[isbn]
         return True
 
 
