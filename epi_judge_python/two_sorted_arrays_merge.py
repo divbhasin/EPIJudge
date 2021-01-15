@@ -13,11 +13,6 @@ def merge_two_sorted_arrays(A, m, B, n):
 
         k -= 1
 
-    while i >= 0:
-        A[k] = A[i]
-        i -= 1
-        k -= 1
-
     while j >= 0:
         A[k] = B[j]
         j -= 1
