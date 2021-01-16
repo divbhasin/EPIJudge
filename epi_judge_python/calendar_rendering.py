@@ -9,8 +9,23 @@ Event = collections.namedtuple('Event', ('start', 'finish'))
 
 
 def find_max_simultaneous_events(A):
-    # TODO - you fill in here.
-    return 0
+    times = []
+    for event in A:
+        s, f = event.start, event.finish
+        times.append((s, True))
+        times.append((f, False))
+
+    times.sort(key=lambda x: (x[0], not x[1]))
+    count, max_count = 0, 0
+
+    for t in times:
+        if t[1]:
+            count += 1
+            max_count = max(max_count, count)
+        else:
+            count -= 1
+
+    return max_count
 
 
 @enable_executor_hook
