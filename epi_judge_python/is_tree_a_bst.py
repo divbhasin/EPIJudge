@@ -1,8 +1,22 @@
 from test_framework import generic_test
 
 
+def inorder(root, inord):
+    if not root:
+        return
+
+    inorder(root.left, inord)
+    inord.append(root.data)
+    inorder(root.right, inord)
+
 def is_binary_tree_bst(tree, low_range=float('-inf'), high_range=float('inf')):
-    # TODO - you fill in here.
+    inord = []
+    inorder(tree, inord)
+
+    for i in range(1, len(inord)):
+        if inord[i] < inord[i - 1]:
+            return False
+
     return True
 
 
