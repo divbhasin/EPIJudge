@@ -10,27 +10,27 @@ Interval = collections.namedtuple('Interval', ('left', 'right'))
 
 
 def union_of_intervals(intervals):
-    intervals.sort(key=lambda i: i.left)
+    if not intervals:
+        return []
 
-    res, i = 0, 0
+    intervals.sort(key=lambda x: (x.left.val, not x.left.is_closed))
 
-    while i < len(intervals) - 1:
-        while i < len(intervals) - 1 and intervals[i].right.val < intervals[i+1].left.val:
-            res.append(intervals[i])
-            if i == len(intervals) - 2:
-                res.append(intervals[i + 1])
+    res = [intervals[0]]
 
-            i += 1
+    for i in intervals:
+        top = res[-1]
+        if (top.right.val > i.left.val) or \
+            (top.right.val == i.left.val and \
+            (top.right.is_closed or i.left.is_closed)):
 
-        curr = intervals[i]
-        while i < len(intervals) - 1 and curr.right.val >= intervals[i+1].left.val:
-            i += 1
+            if (top.right.val < i.right.val) or \
+                (top.right.val == i.left.val and i.right.is_closed):
 
-        new_int = [min(curr.left.val, intervals[i].left.val), \
-                max(curr.right.val, intervals[i].right.val)]
-        res.append(new_int)
-
-        i += 1
+                new_int = Interval(top.left, i.right)
+                res.pop()
+                res.append(new_int)
+        else:
+            res.append(i)
 
     return res 
 
